@@ -8,10 +8,14 @@ from PIL import Image, ImageFont, ImageDraw
 @click.command()
 @click.argument("filename")
 @click.argument("watermark_text")
-@click.option("--row-density", type=int, help="Row density of the watermark text")
-@click.option("--col-density", type=int, help="Col density of the watermark text")
-@click.option("--rotate", type=int, help="Rotate text by degree")
-@click.option("--font-size", type=int, help="Watermark text font size")
+@click.option(
+    "--row-density", default=6, type=int, help="Row density of the watermark text"
+)
+@click.option(
+    "--col-density", default=8, type=int, help="Col density of the watermark text"
+)
+@click.option("--rotate", default=25, type=int, help="Rotate text by degree")
+@click.option("--font-size", default=24, type=int, help="Watermark text font size")
 def watermarking(
     filename: str,
     watermark_text: str,
