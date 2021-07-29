@@ -34,8 +34,8 @@ def watermarking(
     rotate_im = text_im.rotate(rotate, expand=True)
 
     # Watermark & Composite
-    for col in range(-im.size[0] // 2, im.size[0], im.size[0] // row_density):
-        for row in range(-im.size[1] // 2, im.size[1], im.size[1] // col_density):
+    for col in range(-im.size[0] // 2, im.size[0], im.size[0] // col_density):
+        for row in range(-im.size[1] // 2, im.size[1], im.size[1] // row_density):
             watermark_im = Image.new("RGBA", im.size, (255, 255, 255, 0))
             watermark_im.paste(
                 rotate_im,
