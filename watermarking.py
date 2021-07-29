@@ -18,12 +18,12 @@ def watermarking(
     row_density: int = 6,
     col_density: int = 8,
     rotate: int = 25,
-    fontsize: int = 24,
+    font_size: int = 24,
 ):
     """Watermarking FILENAME image with WATERMARK_TEXT."""
     im = Image.open(filename).convert("RGBA")
     draw = ImageDraw.Draw(im)
-    font = ImageFont.truetype("NotoSerifCJK-Bold.ttc", size=fontsize)
+    font = ImageFont.truetype("NotoSerifCJK-Bold.ttc", size=font_size)
 
     # Text
     text_im = Image.new("RGBA", font.getsize(watermark_text), (255, 255, 255, 0))
