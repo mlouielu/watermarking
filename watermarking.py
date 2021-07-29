@@ -1,8 +1,21 @@
 # -*- coding: utf-8 -*-
 import random
+from typing import Tuple
 
 import click
 from PIL import Image, ImageFont, ImageDraw
+
+
+def get_text_im(font: ImageFont, text: str, color: Tuple, rotate: int) -> Image:
+    # Text
+    text_im = Image.new("RGBA", font.getsize(text), (255, 255, 255, 0))
+    text_draw = ImageDraw.Draw(text_im)
+    text_draw.text((0, 0), text, color, font=font)
+
+    # Rotate
+    rotate_im = text_im.rotate(rotate, expand=True)
+
+    return rotate_im
 
 
 @click.command()
@@ -31,17 +44,13 @@ def watermarking(
     draw = ImageDraw.Draw(im)
     font = ImageFont.truetype("NotoSerifCJK-Bold.ttc", size=font_size)
 
-    # Text
-    text_im = Image.new("RGBA", font.getsize(watermark_text), (255, 255, 255, 0))
-    text_draw = ImageDraw.Draw(text_im)
-    text_draw.text((0, 0), watermark_text, (255, 255, 255, 129), font=font)
-
-    # Rotate
-    rotate_im = text_im.rotate(rotate, expand=True)
-
     # Watermark & Composite
     for col in range(-im.size[0] // 2, im.size[0], im.size[0] // col_density):
         for row in range(-im.size[1] // 2, im.size[1], im.size[1] // row_density):
+            color = tuple(
+                [random.randint(0, 255) for _ in range(3)] + [random.randint(70, 150)]
+            )
+            rotate_im = get_text_im(font, watermark_text, color, rotate)
             watermark_im = Image.new("RGBA", im.size, (255, 255, 255, 0))
             watermark_im.paste(
                 rotate_im,
