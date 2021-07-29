@@ -50,7 +50,9 @@ def watermarking(
             color = tuple(
                 [random.randint(0, 255) for _ in range(3)] + [random.randint(70, 150)]
             )
-            rotate_im = get_text_im(font, watermark_text, color, rotate)
+            rotate_im = get_text_im(
+                font, watermark_text, color, rotate + random.randint(-5, 5)
+            )
             watermark_im = Image.new("RGBA", im.size, (255, 255, 255, 0))
             watermark_im.paste(
                 rotate_im,
