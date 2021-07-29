@@ -8,6 +8,7 @@ from PIL import Image, ImageFont, ImageDraw
 @click.command()
 @click.argument("filename")
 @click.argument("watermark_text")
+@click.argument("outfile")
 @click.option(
     "--row-density", default=6, type=int, help="Row density of the watermark text"
 )
@@ -19,6 +20,7 @@ from PIL import Image, ImageFont, ImageDraw
 def watermarking(
     filename: str,
     watermark_text: str,
+    outfile: str,
     row_density: int = 6,
     col_density: int = 8,
     rotate: int = 25,
@@ -47,7 +49,7 @@ def watermarking(
             )
             im = Image.alpha_composite(im, watermark_im)
 
-    im.show()
+    im.save(outfile)
 
 
 if __name__ == "__main__":
